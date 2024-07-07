@@ -1,0 +1,30 @@
+version: "3.9"
+
+networks:
+  line-remind-me:
+
+services:
+  app:
+    build: .
+    command: yarn start
+    networks:
+      - line-remind-me
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    volumes:
+      - db:/app/db
+
+  job:
+    build: .
+    command: yarn start-jobs
+    networks:
+      - line-remind-me
+    env_file:
+      - .env
+    volumes:
+      - db:/app/db
+
+volumes:
+  db:
